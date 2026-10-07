@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Prediction & Marketing Budget Optimizer | AI Data Science Suite</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="logo-text">SalesAI <span>v2.0</span></div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#overview" class="nav-item active" data-tab="overview">
+                    <i class="fa-solid fa-gauge-high"></i> Overview & KPIs
+                </a>
+                <a href="#simulator" class="nav-item" data-tab="simulator">
+                    <i class="fa-solid fa-sliders"></i> ROI & Budget Simulator
+                </a>
+                <a href="#models" class="nav-item" data-tab="models">
+                    <i class="fa-solid fa-robot"></i> Model Benchmark
+                </a>
+                <a href="#insights" class="nav-item" data-tab="insights">
+                    <i class="fa-solid fa-lightbulb"></i> Business Insights
+                </a>
+                <a href="#dataset" class="nav-item" data-tab="dataset">
+                    <i class="fa-solid fa-database"></i> Dataset & EDA
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="dataset-badge">
+                    <i class="fa-solid fa-file-csv"></i> `Advertising.csv` Loaded
+                </div>
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span> ML Model Active
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <h1>Sales Prediction & Budget Optimization Suite</h1>
+                    <p>Machine Learning Forecasting & Predictive Marketing Intelligence</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-outline" id="btn-export">
+                        <i class="fa-solid fa-download"></i> Export Report
+                    </button>
+                    <button class="btn btn-primary" id="btn-quick-sim">
+                        <i class="fa-solid fa-bolt"></i> Run Optimizer
+                    </button>
+                </div>
+            </header>
+
+            <!-- TAB 1: OVERVIEW -->
+            <section id="tab-overview" class="tab-page active">
+                <div class="kpi-grid">
+                    <div class="kpi-card glass">
+                        <div class="kpi-header">
+                            <span class="kpi-title">Best Model R² Score</span>
+                            <i class="fa-solid fa-award kpi-icon text-cyan"></i>
+                        </div>
+                        <div class="kpi-value text-cyan" id="kpi-r2">94.9%</div>
+                        <div class="kpi-subtitle"><i class="fa-solid fa-arrow-trend-up"></i> Linear Regression Pipeline</div>
+                    </div>
+
+                    <div class="kpi-card glass">
+                        <div class="kpi-header">
+                            <span class="kpi-title">Mean Absolute Error</span>
+                            <i class="fa-solid fa-bullseye kpi-icon text-emerald"></i>
+                        </div>
+                        <div class="kpi-value text-emerald" id="kpi-mae">0.88k</div>
+                        <div class="kpi-subtitle">Units accuracy deviation</div>
+                    </div>
+
+                    <div class="kpi-card glass">
+                        <div class="kpi-header">
+                            <span class="kpi-title">Top Channel Return</span>
+                            <i class="fa-solid fa-radio kpi-icon text-indigo"></i>
+                        </div>
+                        <div class="kpi-value text-indigo">Radio Ad Spend</div>
+                        <div class="kpi-subtitle">+$214.18 Sales per $1,000 Spend</div>
+                    </div>
+
+                    <div class="kpi-card glass">
+                        <div class="kpi-header">
+                            <span class="kpi-title">Max Optimization Uplift</span>
+                            <i class="fa-solid fa-chart-pie kpi-icon text-amber"></i>
+                        </div>
+                        <div class="kpi-value text-amber">+113.9%</div>
+                        <div class="kpi-subtitle">vs Equal Split allocation</div>
+                    </div>
+                </div>
+
+                <div class="grid-2-cols margin-top">
+                    <!-- Feature Impact Chart -->
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-layer-group"></i> Advertising Channel Impact ($ per $1k Spend)</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-channel-impact"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Budget Allocator Preview -->
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Executive Strategic Summary</h3>
+                        </div>
+                        <div class="insight-list">
+                            <div class="insight-item">
+                                <div class="insight-badge badge-success">High ROI</div>
+                                <div class="insight-content">
+                                    <strong>Radio Advertising is the Primary Revenue Driver</strong>
+                                    <p>Radio generates +$214.18 per $1,000 spend, demonstrating superior cost efficiency over TV and print.</p>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-badge badge-primary">Volume Leader</div>
+                                <div class="insight-content">
+                                    <strong>TV Spend Scales Steady Baseline Growth</strong>
+                                    <p>TV provides stable volume additions (+$46.37 per $1,000 spend) with minimal saturation risk at high budgets.</p>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-badge badge-warning">Low Efficiency</div>
+                                <div class="insight-content">
+                                    <strong>Re-allocate Newspaper Spend to Digital/Radio</strong>
+                                    <p>Newspaper yields only +$6.32 per $1,000 spend ($0.006 multiplier). Budget should be reallocated.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: ROI & BUDGET SIMULATOR -->
+            <section id="tab-simulator" class="tab-page">
+                <div class="grid-2-cols">
+                    <!-- Controls -->
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-sliders"></i> Marketing Campaign Inputs</h3>
+                            <button class="btn btn-sm btn-accent" id="btn-auto-optimize">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Optimize Budget
+                            </button>
+                        </div>
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <label><i class="fa-solid fa-tv"></i> TV Spend ($1,000s):</label>
+                                <span class="slider-val text-cyan" id="val-tv">$150.0k</span>
+                            </div>
+                            <input type="range" id="input-tv" min="0" max="300" step="1" value="150">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <label><i class="fa-solid fa-radio"></i> Radio Spend ($1,000s):</label>
+                                <span class="slider-val text-indigo" id="val-radio">$30.0k</span>
+                            </div>
+                            <input type="range" id="input-radio" min="0" max="100" step="1" value="30">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <label><i class="fa-solid fa-newspaper"></i> Newspaper Spend ($1,000s):</label>
+                                <span class="slider-val text-amber" id="val-news">$20.0k</span>
+                            </div>
+                            <input type="range" id="input-news" min="0" max="100" step="1" value="20">
+                        </div>
+
+                        <div class="grid-2-cols margin-top">
+                            <div class="input-field">
+                                <label>Target Customer Segment:</label>
+                                <select id="select-segment">
+                                    <option value="Mass Market">Mass Market</option>
+                                    <option value="Gen Z & Youth">Gen Z & Youth</option>
+                                    <option value="B2B & Professionals">B2B & Professionals</option>
+                                    <option value="High Income">High Income</option>
+                                </select>
+                            </div>
+                            <div class="input-field">
+                                <label>Primary Delivery Platform:</label>
+                                <select id="select-platform">
+                                    <option value="Omnichannel Digital">Omnichannel Digital</option>
+                                    <option value="Streaming & TV">Streaming & TV</option>
+                                    <option value="Social Media">Social Media</option>
+                                    <option value="Print & Radio">Print & Radio</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Forecast Card -->
+                    <div class="card glass text-center">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-calculator"></i> ML Forecasted Sales & ROI</h3>
+                        </div>
+
+                        <div class="prediction-display">
+                            <div class="pred-label">FORECASTED SALES REVENUE</div>
+                            <div class="pred-amount text-emerald" id="pred-sales-value">$19.45k</div>
+                            <div class="pred-units" id="pred-sales-units">~ 19,450 Units Sold</div>
+                        </div>
+
+                        <div class="budget-summary-grid">
+                            <div class="b-stat">
+                                <span class="b-title">Total Campaign Spend</span>
+                                <span class="b-val" id="total-spend-val">$200.0k</span>
+                            </div>
+                            <div class="b-stat">
+                                <span class="b-title">Forecast ROI Multiplier</span>
+                                <span class="b-val text-cyan" id="total-roi-val">0.97x</span>
+                            </div>
+                        </div>
+
+                        <div class="chart-container" style="height: 220px; margin-top: 15px;">
+                            <canvas id="chart-budget-pie"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: MODEL BENCHMARK -->
+            <section id="tab-models" class="tab-page">
+                <div class="card glass">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-microchip"></i> Algorithm Performance Comparison</h3>
+                    </div>
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="chart-model-comparison"></canvas>
+                    </div>
+
+                    <div class="table-container margin-top">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Model Name</th>
+                                    <th>R² Score</th>
+                                    <th>Adj R²</th>
+                                    <th>5-Fold CV R²</th>
+                                    <th>MAE</th>
+                                    <th>RMSE</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-models-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: BUSINESS INSIGHTS -->
+            <section id="tab-insights" class="tab-page">
+                <div class="grid-2-cols">
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-chart-line"></i> Channel Sensitivity & Marginal Return</h3>
+                        </div>
+                        <ul class="insight-bullet-list">
+                            <li><strong>TV Advertising:</strong> Strong positive correlation ($r = 0.78$). Generates <strong>+$46.37</strong> per $1,000 spend. Optimal as baseline anchor for broad brand equity.</li>
+                            <li><strong>Radio Advertising:</strong> Highest elasticity and marginal impact (<strong>+$214.18</strong> per $1,000 spend). Crucial driver for instant conversion lift.</li>
+                            <li><strong>Newspaper Advertising:</strong> Diminishing marginal returns ($+$6.32 per $1,000). Highly inefficient compared to modern audio/digital streams.</li>
+                            <li><strong>TV × Radio Synergy:</strong> Interaction effect analysis confirms a combined spend synergy boost when TV and Radio campaigns are executed simultaneously.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-bullseye"></i> Executive Strategic Action Plan</h3>
+                        </div>
+                        <div class="strategy-cards">
+                            <div class="strat-box">
+                                <div class="strat-num">01</div>
+                                <div class="strat-info">
+                                    <h4>Shift 30% Print Budget to Radio</h4>
+                                    <p>Transfer remaining print budget to hyper-targeted digital radio & podcast platforms to maximize marginal gain.</p>
+                                </div>
+                            </div>
+                            <div class="strat-box">
+                                <div class="strat-num">02</div>
+                                <div class="strat-info">
+                                    <h4>Capitalize on Omnichannel Synergy</h4>
+                                    <p>Co-ordinate TV broad reach with digital radio retargeting for optimal audience conversion.</p>
+                                </div>
+                            </div>
+                            <div class="strat-box">
+                                <div class="strat-num">03</div>
+                                <div class="strat-info">
+                                    <h4>Deploy Constrained Optimizer</h4>
+                                    <p>Utilize the scipy-powered optimization tool before quarterly budget lock to boost expected revenue by up to 113%.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: DATASET & EDA -->
+            <section id="tab-dataset" class="tab-page">
+                <div class="grid-2-cols">
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-table"></i> Sample Observations from `Advertising.csv`</h3>
+                        </div>
+                        <div class="table-container" style="max-height: 380px; overflow-y: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>TV ($k)</th>
+                                        <th>Radio ($k)</th>
+                                        <th>Newspaper ($k)</th>
+                                        <th>Target Segment</th>
+                                        <th>Platform</th>
+                                        <th>Sales ($k)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-dataset-body">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-square-poll-vertical"></i> Exploratory Correlation Heatmap</h3>
+                        </div>
+                        <div class="chart-container" style="height: 380px;">
+                            <canvas id="chart-correlation"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
